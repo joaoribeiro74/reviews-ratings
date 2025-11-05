@@ -8,7 +8,6 @@ import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
-// (Opcionalmente, importe DTOs de Login e Registro se você os criar)
 
 @Injectable()
 export class AuthService {
@@ -47,7 +46,7 @@ export class AuthService {
     if (!passwordMatch)
       throw new UnauthorizedException('Credenciais inválidas.');
 
-    const payload = { sub: user.id, email: user.email };
+    const payload = { sub: user.id, email: user.email, role:user.role };
     const token = await this.jwtService.signAsync(payload);
 
     return { access_token: token };

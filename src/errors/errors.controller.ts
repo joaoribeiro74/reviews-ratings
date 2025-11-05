@@ -9,7 +9,7 @@ import {
   Param,
   Query,
 } from '@nestjs/common';
-import { CustomException } from '../custom-exception/custom.exception';
+import { CustomException } from '../common/exceptions/custom.exception';
 
 @Controller('errors')
 export class ErrorsController {

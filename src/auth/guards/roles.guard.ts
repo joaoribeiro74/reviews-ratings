@@ -1,4 +1,4 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from '../decorators/roles.decorator';
 
@@ -13,8 +13,11 @@ export class RolesGuard implements CanActivate {
     ]);
     if (!requiredRoles) return true;
 
-    const request = context.switchToHttp().getRequest();
-    const user = request.user;
-    return requiredRoles.some((role) => user.role?.includes(role));
+    const { user } = context.switchToHttp().getRequest();
+
+    if (!user || !requiredRoles.includes(user.role)) { throw new ForbiddenException('Acesso negado: você não é administrador.');
+    }
+
+    return true;
   }
 }

@@ -10,9 +10,10 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ItemsModule } from './items/items.module';
+import { RatingModule } from './rating/rating.module';
 
 @Module({
-  imports: [SharedModule, CoreModule, ReviewsModule, ErrorsModule, PrismaModule, UserModule, AuthModule, ItemsModule],
+  imports: [SharedModule, CoreModule, ReviewsModule, ErrorsModule, PrismaModule, UserModule, AuthModule, ItemsModule, RatingModule],
   controllers: [AppController, ErrorsController],
   providers: [AppService],
 })

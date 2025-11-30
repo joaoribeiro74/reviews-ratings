@@ -1,24 +1,40 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
-import { CustomExceptionFilter } from './custom-exception/custom-exception.filter';
-import { ResponseInterceptor } from './response/response.interceptor';
-import { HttpExceptionFilter } from './http-exception/http-exception.filter';
-
+import { ClassSerializerInterceptor, ValidationPipe, VersioningType } from '@nestjs/common';
+import { CustomExceptionFilter } from './common/exceptions/custom-exception.filter';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  
+  app.setGlobalPrefix('api');
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: '1',
+  });
+  
   app.useGlobalPipes(
     new ValidationPipe({
-      transform: true, 
+      transform: true,
       whitelist: true,
       forbidNonWhitelisted: true,
     }),
   );
-  
-  app.useGlobalInterceptors(new ResponseInterceptor());
-  app.useGlobalFilters(new CustomExceptionFilter());
-  app.useGlobalFilters(new HttpExceptionFilter());
 
-  await app.listen(3000);
+  const config = new DocumentBuilder()
+    .setTitle('API com Swagger')
+    .setDescription('Documentação automática da API com Swagger')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
+  app.useGlobalInterceptors(new ResponseInterceptor());
+  app.useGlobalFilters(new CustomExceptionFilter(), new HttpExceptionFilter());
+
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();

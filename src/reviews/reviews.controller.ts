@@ -2,49 +2,111 @@ import {
   Controller,
   Get,
   Post,
-  Put,
   Patch,
   Delete,
   Param,
   Body,
-  HttpCode,
+  Req,
+  UseGuards,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
-import type { Review } from './interfaces/review.interface';
+import { CreateReviewDto } from './dto/create-review.dto';
+import { UpdateReviewDto } from './dto/update-review.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+  ApiParam,
+} from '@nestjs/swagger';
+import { ReviewResponseDto } from './dto/review-response.dto';
 
+@ApiTags('reviews')
 @Controller('reviews')
+@UseInterceptors(ClassSerializerInterceptor)
 export class ReviewsController {
-  constructor(private readonly reviewsService: ReviewsService) {}
+  constructor(private readonly reviewService: ReviewsService) {}
 
+  @ApiOperation({ summary: 'Cria um novo review para um item' })
+  @ApiResponse({
+    status: 201,
+    description: 'Review criado',
+    type: ReviewResponseDto,
+  })
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Post()
-  @HttpCode(201)
-  create(@Body() body: Review) {
-    return this.reviewsService.create(body);
+  create(
+    @Req() req,
+    @Body() data: CreateReviewDto,
+  ): Promise<ReviewResponseDto> {
+    return this.reviewService.create(req.user.id, data);
   }
 
+  @ApiOperation({ summary: 'Lista todos os reviews' })
+  @ApiResponse({
+    status: 200,
+    description: 'Lista de reviews',
+    type: [ReviewResponseDto],
+  })
   @Get()
-  findAll() {
-    return this.reviewsService.findAll();
+  findAll(): Promise<ReviewResponseDto[]> {
+    return this.reviewService.findAll();
   }
 
+  @ApiOperation({ summary: 'Busca um review por ID' })
+  @ApiParam({ name: 'id', example: 1 })
+  @ApiResponse({
+    status: 200,
+    description: 'Review encontrado',
+    type: ReviewResponseDto,
+  })
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.reviewsService.findOne(Number(id));
+  findOne(@Param('id') id: string): Promise<ReviewResponseDto> {
+    return this.reviewService.findOne(Number(id));
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() body: Partial<Review>) {
-    return this.reviewsService.update(Number(id), body);
-  }
-
+  @ApiOperation({ summary: 'Atualiza um review (somente o dono)' })
+  @ApiParam({ name: 'id', example: 1 })
+  @ApiResponse({
+    status: 200,
+    description: 'Review atualizado',
+    type: ReviewResponseDto,
+  })
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Patch(':id')
-  partialUpdate(@Param('id') id: string, @Body() body: Partial<Review>) {
-    return this.reviewsService.update(Number(id), body);
+  update(
+    @Param('id') id: string,
+    @Req() req,
+    @Body() data: UpdateReviewDto,
+  ): Promise<ReviewResponseDto> {
+    return this.reviewService.update(Number(id), req.user.id, data);
   }
 
+  @ApiOperation({ summary: 'Remove um review (somente o dono)' })
+  @ApiParam({ name: 'id', example: 1 })
+  @ApiResponse({
+    status: 200,
+    description: 'Review removido com sucesso',
+  })
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Delete(':id')
-  @HttpCode(204)
-  remove(@Param('id') id: string) {
-    return this.reviewsService.remove(Number(id));
+  remove(@Param('id') id: string, @Req() req) {
+    return this.reviewService.remove(Number(id), req.user.id);
+  }
+
+  @ApiOperation({ summary: 'Lista reviews do item + estatísticas' })
+  @ApiResponse({
+    status: 200,
+    description: 'Lista de reviews e estatísticas do item.',
+  })
+  @Get('item/:itemId')
+  findByItem(@Param('itemId') itemId: string) {
+    return this.reviewService.findByItemWithStats(Number(itemId));
   }
 }

@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id          Int       @id @default(autoincrement())
+  email       String    @unique
+  password    String
+  name        String?
+  username    String   @unique
+  avatar      String?   // URL do avatar de perfil
+  bio         String?   // pequena descrição pessoal
+  role        Role      @default(USER)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  lastUsernameChange DateTime?
+
+  reviews     Review[]
+  ratings     Rating[]
+}
+
+model Item {
+  id        Int       @id @default(autoincrement())
+  title     String
+  description String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  reviews   Review[]
+  ratings   Rating[]
+}
+
+model Review {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  itemId    Int
+  content   String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  user      User      @relation(fields: [userId], references: [id])
+  item      Item      @relation(fields: [itemId], references: [id])
+
+  @@unique([userId, itemId]) // um review por item por usuário
+}
+
+model Rating {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  itemId    Int
+  value     Float     // pode ser 0.5, 1.5, etc.
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  user      User      @relation(fields: [userId], references: [id])
+  item      Item      @relation(fields: [itemId], references: [id])
+
+  @@unique([userId, itemId]) // um rating por item por usuário
+}

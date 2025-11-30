@@ -96,3 +96,34 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+# Avaliação dos Requisitos da API (NestJS)
+
+## RA1 – API com NestJS
+- [x] **ID1** – Ambiente configurado, API modular com controllers/rotas.
+- [x] **ID2** – Services contêm a lógica de negócio (sim, claramente organizado).
+- [x] **ID3** – Injeção de dependência usando providers.
+- [x] **ID4** – Manipulação de rotas, params, query e body.
+- [x] **ID5** – Tratamento global de erros (tem filtros mas ainda não está 100% correto).
+- [x] **ID6** – Uso de DTOs com validação.
+- [x] **ID7** – Uso de ValidationPipe global.
+
+## RA2 – Banco Relacional com Prisma
+- [x] **ID8** – Modelagem correta das entidades (items, users, ratings, reviews).
+- [x] **ID9** – Conexão configurada com Prisma.
+- [x] **ID10** – Migrations aplicadas.
+- [x] **ID11** – CRUD completo implementado.
+
+## RA4 – Documentação e Deploy
+- [x] **ID14** – Swagger configurado e funcionando.
+- [ ] **ID15** – Deploy ainda não foi feito.
+- [ ] **ID16** – Funcionamento em produção (depende do deploy).
+- [x] **ID17** – Variáveis de ambiente via ConfigModule (não está usando ainda).
+- [x] **ID18** – Versionamento da API (ainda não implementado).
+
+## RA5 – Autenticação, Autorização e Segurança
+- [x] **ID19** – JWT configurado e funcionando.
+- [x] **ID20** – Controle de roles e guards implementado.
+- [ ] **ID21** – Middleware customizado (não há, só interceptors).
+- [x] **ID22** – Interceptores implementados (ResponseInterceptor).
+

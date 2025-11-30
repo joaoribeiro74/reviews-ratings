@@ -17,7 +17,10 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('users')
-@Controller('users')
+@Controller({
+  path: 'users',
+  version: '1',
+})
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 export class UserController {

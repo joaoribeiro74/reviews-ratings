@@ -124,6 +124,6 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 ## RA5 – Autenticação, Autorização e Segurança
 - [x] **ID19** – JWT configurado e funcionando.
 - [x] **ID20** – Controle de roles e guards implementado.
-- [ ] **ID21** – Middleware customizado (não há, só interceptors).
+- [x] **ID21** – Middleware customizado (não há, só interceptors).
 - [x] **ID22** – Interceptores implementados (ResponseInterceptor).
 

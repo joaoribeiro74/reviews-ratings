@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { plainToInstance } from 'class-transformer';
 import { ItemResponseDto } from './dto/item-response.dto';
+import { ItemWithReviewsDto } from './dto/item-with-reviews.dto';
 
 @Injectable()
 export class ItemsService {
@@ -19,14 +20,27 @@ export class ItemsService {
     return Promise.all(items.map((item) => this.attachStats(item)));
   }
 
-  async findOne(id: number) {
-    const item = await this.prisma.item.findUnique({
+  async findOne(id: number): Promise<ItemWithReviewsDto> {
+    const item = await this.prisma.item.findFirst({
       where: { id },
+      include: {
+        reviews: {
+          include: {
+            user: {
+              select: { id: true, username: true },
+            },
+          },
+        },
+      },
     });
 
-    if (!item) throw new NotFoundException('Item não encontrado.');
+    if (!item) {
+      throw new NotFoundException(`Item ${id} não encontrado`);
+    }
 
-    return this.attachStats(item);
+    return plainToInstance(ItemWithReviewsDto, item, {
+      excludeExtraneousValues: true,
+    });
   }
 
   async getStats(id: number) {

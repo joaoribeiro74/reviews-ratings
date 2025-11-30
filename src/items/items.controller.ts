@@ -13,11 +13,17 @@ import {
 import { ItemsService } from './items.service';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
-import { ApiTags, ApiOperation, ApiParam, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiParam,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { ItemResponseDto } from './dto/item-response.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
+import { ItemWithReviewsDto } from './dto/item-with-reviews.dto';
 
 @ApiTags('items')
 @Controller('items')
@@ -26,7 +32,6 @@ export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
   @ApiOperation({ summary: 'Cria um item' })
-
   @Post()
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -44,8 +49,8 @@ export class ItemsController {
   @ApiOperation({ summary: 'Busca um item por ID com estatísticas' })
   @ApiParam({ name: 'id', example: 1 })
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<ItemResponseDto> {
-    return this.itemsService.findOne(Number(id));
+  findOne(@Param('id') id: string): Promise<ItemWithReviewsDto> {
+    return this.itemsService.findOne(+id);
   }
 
   @ApiOperation({ summary: 'Estatísticas do item' })

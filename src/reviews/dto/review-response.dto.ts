@@ -1,4 +1,4 @@
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude, Expose, Transform } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ReviewResponseDto {
@@ -19,10 +19,11 @@ export class ReviewResponseDto {
   userId: number;
 
   @ApiProperty()
-  @Expose()
+  @Exclude()
   createdAt: Date;
 
   @ApiProperty()
   @Expose()
+  @Transform(({ value }) => value ?? undefined)
   updatedAt: Date;
 }

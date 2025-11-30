@@ -1,5 +1,5 @@
-import { Exclude, Expose } from 'class-transformer';
-import { ApiProperty } from '@nestjs/swagger';
+import { Exclude, Expose, Transform } from 'class-transformer';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class UserResponseDto {
   @ApiProperty({
@@ -31,20 +31,22 @@ export class UserResponseDto {
   @Expose()
   name?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: 'https://example.com/avatar.jpg',
     description: 'Avatar do usuário',
     required: false,
   })
   @Expose()
+  @Transform(({ value }) => value ?? undefined)
   avatar?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: 'Biografia do usuário',
     description: 'Bio do perfil',
     required: false,
   })
   @Expose()
+  @Transform(({ value }) => value ?? undefined)
   bio?: string;
 
   @Exclude()

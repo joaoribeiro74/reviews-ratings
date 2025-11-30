@@ -15,6 +15,8 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { ChangeEmailDto } from './dto/change-email.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { plainToInstance } from 'class-transformer';
+import { ProfileResponseDto } from './dto/profile.dto';
 
 ApiTags('auth')
 @Controller('auth')
@@ -45,13 +47,13 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Usuário não autenticado' })
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @Get('perfil')
-  async getPerfil(@Req() request) {
-    const usuarioLogado = request.user;
-    return {
-      message: 'Você acessou uma rota protegida!',
-      user: usuarioLogado,
-    };
+  @Get('profile')
+  async getProfile(@Req() request) {
+    const user = request.user;
+    
+    return plainToInstance(ProfileResponseDto, user, {
+      excludeExtraneousValues: true,
+    });
   }
 
   @ApiOperation({ summary: 'Altera o email do usuário logado' })

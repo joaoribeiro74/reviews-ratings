@@ -1,5 +1,5 @@
 import { IsOptional, IsString, MinLength } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateItemDto {
   @ApiProperty({ example: 'Produto X' })
@@ -7,7 +7,7 @@ export class CreateItemDto {
   @MinLength(3)
   title: string;
 
-  @ApiProperty({ example: 'Descrição do item', required: false })
+  @ApiPropertyOptional({ example: 'Descrição do item', required: false })
   @IsOptional()
   @IsString()
   description?: string;

@@ -1,129 +1,107 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Sistema de Reviews e Avaliações
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Autor
+**Nome:** João Vitor Ribeiro Ribas Carvalho
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+**GitHub:** [joaoribeiro74](https://github.com/joaoribeiro74)
 
-## Description
+## Descrição do Projeto
+Este é um Sistema de Classificação e Reviews Universal (API RESTful) construído com NestJS, TypeScript e Prisma (MySQL).
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+O objetivo principal é oferecer uma plataforma genérica onde usuários podem avaliar e fazer reviews sobre qualquer tipo de Item (ex: jogos, filmes, livros).
 
-## Project setup
+### Funcionalidades Principais:
+- Autenticação: Registro, Login (JWT) e gerenciamento seguro de perfil.
+
+- Gerenciamento de Itens: Rotas para criar, listar e gerenciar as entidades a serem avaliadas.
+
+- Avaliações: Permite submeter Ratings (notas numéricas) e Reviews (textos/críticas) de forma separada ou combinada.
+
+- Comunidade: Calcula e exibe a média das classificações para cada Item.
+
+## Link para a API em Produção
+[Acessar API em Produção](https://reviews-ratings.onrender.com/api)
+
+## Instruções de Execução
+
+### Pré-requisitos
+- Node.js >= 22
+- npm >= 11
+- MySQL >= 8
+
+### Instalação
+1. Clone o repositório:
+
+```bash
+git clone https://github.com/joaoribeiro74/reviews-ratings.git
+cd reviews-ratings
+```
+
+2. Instale as dependências
 
 ```bash
 $ npm install
 ```
 
-## Compile and run the project
+3. Configuração do Banco de Dados
+
+- Exemplo de URL de conexão no .env:
 
 ```bash
-# development
-$ npm run start
+DATABASE_URL="mysql://root:root@localhost:3306/reviews_ratings"
+PORT=3000
+JWT_SECRET="sua_chave_secreta"
+JWT_EXPIRES_IN="1h"
+```
 
-# watch mode
+4. Rode os migrations locais
+
+```bash
+$ npx prisma migrate dev
+```
+
+5. Seed opcional (Para criar um usuário Admin)
+
+```bash
+$ npm run seed
+```
+6. Inicie o Projeto
+
+```bash
 $ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
 
-## Run tests
+## Link para o Diagrama
+[Acessar Diagrama de Entidade-Relacionameto](https://drive.google.com/file/d/1x5dCpSPphYpDmDPQ482OQ9Q7LTO8eAvK/view?usp=sharing)
 
-```bash
-# unit tests
-$ npm run test
 
-# e2e tests
-$ npm run test:e2e
+# Indicadores de Desempenho (ID) dos Resultados de Aprendizagem (RA)
 
-# test coverage
-$ npm run test:cov
-```
+## RA1 - Projetar e desenvolver uma API funcional utilizando o framework NestJS.
+- [x] **ID1** – O aluno configurou corretamente o ambiente de desenvolvimento e criou a API utilizando NestJS, com rotas e controladores que seguem a arquitetura modular.
+- [x] **ID2** –  O aluno aplicou boas práticas de organização da lógica de negócios, garantindo que os services contenham a lógica de negócio e sejam chamados pelos controladores, separando responsabilidades corretamente.
+- [x] **ID3** – O aluno utilizou providers e configurou adequadamente a injeção de dependência no NestJS, garantindo uma arquitetura modular e escalável.
+- [x] **ID4** – O aluno demonstrou a habilidade de criar e manipular rotas HTTP, manipulando parâmetros de rota, query e body, lidando corretamente com requisições e respostas.
+- [x] **ID5** – O aluno aplicou boas práticas de tratamento de erros, utilizando filtros globais e personalizando as mensagens de erro para garantir respostas claras e consistentes.
+- [x] **ID6** – O aluno criou classes DTO (Data Transfer Objects) para garantir a validação e consistência dos dados em diferentes endpoints, utilizando pipes para validar entradas de dados.
+- [x] **ID7** – O aluno aplicou corretamente pipes de validação no NestJS, verificando entradas inválidas e assegurando a integridade dos dados transmitidos
 
-## Deployment
+## RA2 - Implementar persistência de dados com um banco de dados relacional utilizando Prisma ou TypeORM.
+- [x] **ID8** – O aluno modelou corretamente os dados da aplicação, definindo entidades, suas relações e campos necessários, refletidos em um Diagrama de Entidade-Relacionamento (ERD).
+- [x] **ID9** – O aluno configurou e conectou a API a um banco de dados relacional (PostgreSQL, MySQL, etc.) utilizando Prisma ou TypeORM.
+- [x] **ID10** – O aluno criou e aplicou migrações de banco de dados para garantir a consistência dos dados entre desenvolvimento e produção.
+- [x] **ID11** – O aluno implementou corretamente as operações CRUD (Create, Read, Update, Delete) para pelo menos uma entidade no projeto, utilizando NestJS.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## RA4 - Gerar a documentação da API e realizar o deploy em um ambiente de produção.
+- [x] **ID14** – O aluno integrou corretamente o Swagger à API, gerando a documentação completa e interativa dos endpoints, parâmetros e respostas da API, com exemplos de requisições e respostas.
+- [x] **ID15** – O aluno realizou o deploy da API em uma plataforma de hospedagem na nuvem (ex.: Render.com, Heroku, Vercel, etc.), garantindo que a API estivesse acessível publicamente.
+- [x] **ID16** – O aluno garantiu que a API funcionasse corretamente no ambiente de produção, incluindo a documentação Swagger e o banco de dados.
+- [x] **ID17** – O aluno realizou a configuração correta de variáveis de ambiente usando o ConfigModule do NestJS.
+- [x] **ID18** – O aluno implementou corretamente o versionamento de APIs REST no NestJS, assegurando que diferentes versões da API pudessem coexistir.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
-
-# Avaliação dos Requisitos da API (NestJS)
-
-## RA1 – API com NestJS
-- [x] **ID1** – Ambiente configurado, API modular com controllers/rotas.
-- [x] **ID2** – Services contêm a lógica de negócio (sim, claramente organizado).
-- [x] **ID3** – Injeção de dependência usando providers.
-- [x] **ID4** – Manipulação de rotas, params, query e body.
-- [x] **ID5** – Tratamento global de erros (tem filtros mas ainda não está 100% correto).
-- [x] **ID6** – Uso de DTOs com validação.
-- [x] **ID7** – Uso de ValidationPipe global.
-
-## RA2 – Banco Relacional com Prisma
-- [x] **ID8** – Modelagem correta das entidades (items, users, ratings, reviews).
-- [x] **ID9** – Conexão configurada com Prisma.
-- [x] **ID10** – Migrations aplicadas.
-- [x] **ID11** – CRUD completo implementado.
-
-## RA4 – Documentação e Deploy
-- [x] **ID14** – Swagger configurado e funcionando.
-- [ ] **ID15** – Deploy ainda não foi feito.
-- [ ] **ID16** – Funcionamento em produção (depende do deploy).
-- [x] **ID17** – Variáveis de ambiente via ConfigModule (não está usando ainda).
-- [x] **ID18** – Versionamento da API (ainda não implementado).
-
-## RA5 – Autenticação, Autorização e Segurança
-- [x] **ID19** – JWT configurado e funcionando.
-- [x] **ID20** – Controle de roles e guards implementado.
-- [x] **ID21** – Middleware customizado (não há, só interceptors).
-- [x] **ID22** – Interceptores implementados (ResponseInterceptor).
+## RA5 - Implementar autenticação, autorização e segurança em APIs utilizando JWT, Guards, Middleware e Interceptadores.
+- [x] **ID19** – O aluno configurou a autenticação na API utilizando JWT (JSON Web Tokens).
+- [x] **ID20** – O aluno implementou controle de acesso baseado em roles e níveis de permissão, utilizando Guards para verificar permissões em rotas específicas.
+- [x] **ID21** – O aluno configurou e utilizou middleware para manipular requisições antes que elas chegassem aos controladores, realizando tarefas como autenticação, logging ou tratamento de CORS.
+- [x] **ID22** – O aluno implementou interceptadores para realizar logging ou modificar as respostas antes de enviá-las ao cliente.
 
